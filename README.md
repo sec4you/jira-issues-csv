@@ -1,8 +1,23 @@
 # Issue Manager
 
-### Requirements
+### Installation
 
-`pip install requests`
+- From source:
+
+```
+git clone https://github.com/sec4you/jira-issues-csv
+cd jira-issues-csv
+python setup.py install
+```
+
+- From source with pip:
+
+```
+git clone https://github.com/sec4you/jira-issues-csv
+cd jira-issues-csv
+python setup.py sdist
+pip install dist/*
+```
 
 ### Usage
 
@@ -22,5 +37,5 @@ optional arguments:
 
 ```
 title;subject;project;component;assignee
-Test1;Test subject;github;user
+Test1;Test subject;test component;test user
 ```
