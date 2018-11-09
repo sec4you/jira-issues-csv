@@ -10,6 +10,6 @@ setup(
 	keywords = ['jira','csv'],
 	install_requires = ['requests>=2.18.4'],
 	classifiers = [],
-	scripts = ['issuemanager.py']
+	scripts = ['jira-issues-csv.py']
 )
 	
