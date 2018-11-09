@@ -1,6 +1,9 @@
-import requests, json
+#!/usr/bin/env python
+
+import requests, json                                                                                                                 
 from requests.auth import HTTPBasicAuth
 import logging
+import argparse, csv
 
 logging.basicConfig(level='DEBUG')
 
@@ -54,6 +57,23 @@ class JIRA(object):
         issue = requests.post("{}/rest/api/2/issue".format(self.url),
                       json=jdata,
                       auth = HTTPBasicAuth('{}'.format(self.username), '{}'.format(self.password))
-                      )
+                      )                                                                                                                                                                                                                                                       
         return issue
+
+parser = argparse.ArgumentParser(description='jira-issues-csv')
+parser.add_argument('--url', help='JIRA URL (example: https://jira.acme.com.br)', required=True)
+parser.add_argument('--username', help='JIRA Usernanme', required=True)
+parser.add_argument('--password', help='JIRA Password', required=True)
+parser.add_argument('--csv', help='CSV File with issues to import on JIRA', required=True)
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    jira = JIRA(url=args.url,username=args.username,password=args.password)
+    print jira.get_projects()
+    csvfile = open(args.csv)
+    reader = csv.DictReader(csvfile, delimiter=';')
+    for row in reader:
+        jira.create_issue(row['title'],row['subject'],project=row['project'],component=row['component'],assigne=row['assignee'])
+
+
 
