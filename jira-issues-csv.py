@@ -8,7 +8,6 @@ import argparse, csv
 logging.basicConfig(level='DEBUG')
 
 class JIRA(object):
-
     def __init__(self,url=None,username=None,password=None):
         self.url = url
         self.username = username
@@ -38,13 +37,13 @@ class JIRA(object):
         try: return json.loads(req.text)
         except: return req.text
 
-    def create_issue(self, title, subject, project, component=None, assigne=None):
+    def create_issue(self, title, subject, project, issue_type=None, component=None, assigne=None):
         jdata = {}
         jdata['fields'] = {}
         fields = jdata['fields']
         fields['summary'] = title
         fields['description'] = subject
-        fields['issuetype'] = {"name":"Task"}
+        fields['issuetype'] = {"name":issue_type if issue_type else "New Feature"}
         fields['project'] = {"key":project}
         if component:
             c = filter(lambda d: d['name'] == component,
@@ -73,7 +72,7 @@ if __name__ == "__main__":
     csvfile = open(args.csv)
     reader = csv.DictReader(csvfile, delimiter=';')
     for row in reader:
-        jira.create_issue(row['title'],row['subject'],project=row['project'],component=row['component'],assigne=row['assignee'])
+        jira.create_issue(row['title'],row['subject'],project=row['project'],issue_type=row['type'],component=row['component'],assigne=row['assignee'])
 
 
 
