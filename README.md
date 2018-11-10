@@ -36,6 +36,12 @@ optional arguments:
 ### CSV File example
 
 ```
-title;subject;project;component;assignee
-Test1;Test subject;test component;test user
+title;subject;project;type;component;assignee
+Test1;Test subject;Issue type;Test component;Test user
 ```
+
+- Mandatory: title, subject, project
+
+- Optional: type, component, assignee
+
+
